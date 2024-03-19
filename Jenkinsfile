@@ -10,7 +10,7 @@ pipeline {
         stages {
             stage ('Checkout from git'){
                 steps {
-                    git branch: 'main', url: 'https://github.com/bkrrajmali/springbootapp.git'
+                    git branch: 'main', url: 'https://github.com/AshwiniPatil90/springbootapp.git'
             }
         }
         stage ('Maven Build'){
@@ -25,29 +25,29 @@ pipeline {
                 echo '<----------------------Unit Test Done------------------>'
             }
         }
-        stage ('Sonarqube analysis'){
-            steps {
-                script {
-                    withSonarQubeEnv('sonar-server') {
-                        sh  ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
-                        -Dsonar.projectKey=springbootapp '''
-                    }
-                }
-            }
-        }
-        stage ('Quality Gate Test'){
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
-                }
-            }
-        }
-        stage ('Build Docker Image'){
-            steps {
-                script {
-                    sh 'docker build -t myrepo .'
-                }
-            }
-        }    
+        // stage ('Sonarqube analysis'){
+        //     steps {
+        //         script {
+        //             withSonarQubeEnv('sonar-server') {
+        //                 sh  ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
+        //                 -Dsonar.projectKey=springbootapp '''
+        //             }
+        //         }
+        //     }
+        // }
+        // stage ('Quality Gate Test'){
+        //     steps {
+        //         script {
+        //             waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+        //         }
+        //     }
+        // }
+        // stage ('Build Docker Image'){
+        //     steps {
+        //         script {
+        //             sh 'docker build -t myrepo .'
+        //         }
+        //     }
+        // }    
     }
 }
