@@ -74,6 +74,17 @@ pipeline {
                 
                 }
             }   
-        }      
+        } 
+        stage ("Push Image to ECR")  {
+        steps {
+            script {
+                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 306818427337.dkr.ecr.us-east-1.amazonaws.com'
+                //sh 'docker build -t ncplrepo .'
+                sh 'docker tag myrepo:latest 306818427337.dkr.ecr.us-east-1.amazonaws.com/springboot-app:latest'
+                sh 'docker push 306818427337.dkr.ecr.us-east-1.amazonaws.com/springboot-app:latest'
+
+            }
+        }
+    }     
     }
 }
